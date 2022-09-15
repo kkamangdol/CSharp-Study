@@ -7,9 +7,29 @@ namespace HelloCSharpWin
             InitializeComponent();
         }
 
+
+        public bool Hasvalue()
+        {
+            return true;
+        }
+
         private void HelloLabel_Click(object sender, EventArgs e)
-        {   
-           
+        {
+
+            int number1 = 1;
+            int number2 = 2;
+            if (Hasvalue())
+            {
+
+            }
+            else 
+            {
+
+                //dsf
+            }
+
+
+
             int number1 = 1;
             int number2 = 2;
             
