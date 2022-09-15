@@ -25,7 +25,7 @@ namespace HelloCSharpWin
             else 
             {
 
-                //dsf
+                //dsfずぜせそそせぜずそ
             }
 
 
