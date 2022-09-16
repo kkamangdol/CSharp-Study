@@ -1,90 +1,162 @@
+using System;
+
 namespace HelloCSharpWin
 {
+    public enum Operators {Add, Sub, Multi, Div}
     public partial class Calculator : Form
     {
+        public decimal Result = 0;
+        public bool isNewNum = true;
+        public Operators Opt = Operators.Add;
         public Calculator()
         {
             InitializeComponent();
         }
 
-
-        public bool Hasvalue()
+        public decimal Add(decimal number1, decimal number2)
         {
-            return true;
+            decimal add = number1 + number2; 
+            return add; 
         }
 
-        private void HelloLabel_Click(object sender, EventArgs e)
+        public decimal Sub(decimal number1, decimal number2)
         {
+            decimal sub = number1 - number2;
+            return sub;    
+        }
 
-            int number1 = 1;
-            int number2 = 2;
-            if (Hasvalue())
+        public decimal Multi(decimal number1, decimal number2)
+        {
+            decimal multi = number1 * number2;
+            return multi;
+        }
+
+        public decimal Div(decimal number1, decimal number2)
+        {
+            decimal div = number1 / number2;
+            return div;
+        }
+
+        public void SetNum(string num)
+        {
+            /*
+            if (NumScreen.Text == "0")
+                NumScreen.Text = num;
+            else NumScreen.Text = NumScreen.Text + num;
+            */
+
+            if (isNewNum)
             {
-
+                NumScreen.Text = num;
+                isNewNum = false;
             }
-            else 
+
+            else if (NumScreen.Text == "0")
             {
-
-                //dsfㅊㅌㅋㅍㅍㅋㅌㅊㅍ
+                NumScreen.Text = num;
             }
 
-
-
-            int number1 = 1;
-            int number2 = 2;
             
-            int sum = number1 + number2;
-
-            HelloLabel.Text = sum.ToString();
+            else
+            {
+                NumScreen.Text = NumScreen.Text + num;
+            }
         }
 
-        private void SumNumbers_Click(object sender, EventArgs e)
+        private void NumButton1_Click(object sender, EventArgs e)
         {
-            int number1 = 0;
-            int number2 = 0;
-
-            if (String.IsNullOrWhiteSpace(Sum1.Text))
-            {
-                MessageBox.Show("Sum1에 숫자를 입력해주세요.");
-                Sum1.Focus();
-                return;
-            }
-
-
-            if (int.TryParse(Sum1.Text, out number1) == false)
-            {
-                MessageBox.Show("Sum1에 문자가 들어왔습니다. 숫자를 입력해주세요.");
-                Sum1.SelectAll();
-                Sum1.Focus();
-                return;
-            }
-
-            if (String.IsNullOrWhiteSpace(Sum2.Text))
-            {
-                MessageBox.Show("Sum2에 숫자를 입력해주세요.");
-                return;
-            }
-
-            if (int.TryParse(Sum2.Text, out number2) == false)
-            {
-                MessageBox.Show("Sum2에 문자가 들어왔습니다. 숫자를 입력해주세요.");
-                return;
-            }
-
-            int sum = Add(number1, number2);
-            SumResult.Text = sum.ToString();   
+            Button numButton = (Button)sender;
+            SetNum(numButton.Text);
         }
 
-        public int Add(int number1, int number2)
-        {
-            int sum = number1 + number2; 
-            return sum; 
+        // 변수 = 0
+        // 연산자 = +
+
+        // 숫자 입력
+        // 연산자 버튼 - 숫자 완성, 변수와 숫자를 저장한 연산자로 연산, 결과를 변수에 저장, 현재 연산자를 저장.
+        // 숫자 입력
+        // 연산자 버튼 - 숫자 완성, 변수와 숫자를 저장된 연산자로 연산, 결과를 변수에 저장, 현재 연산자를 저장.
+        private void NumPlus_Click(object sender, EventArgs e)
+        {   
+            // 예외처리
+            if (isNewNum == false)
+            {
+                //decimal.parse = 숫자형으로 
+                decimal num = decimal.Parse(NumScreen.Text);
+                if (Opt == Operators.Add)
+                    Result = Add(Result, num);
+                else if (Opt == Operators.Sub)
+                    Result = Sub(Result, num);
+                else if (Opt == Operators.Multi)
+                    Result = Multi(Result, num);
+                else if (Opt == Operators.Div)
+                    Result = Div(Result, num);
+
+                //ToSTring = 문자형으로
+                NumScreen.Text = Result.ToString();
+                isNewNum = true;
+            }
+
+            Button optButton = (Button)sender;
+            if (optButton.Text == "+")
+                Opt = Operators.Add;
+            else if (optButton.Text == "-")
+                Opt = Operators.Sub;
+            else if (optButton.Text == "×")
+                Opt = Operators.Multi;
+            else if (optButton.Text == "÷")
+                Opt = Operators.Div;
+
         }
 
-        public float Add(float number1, float number2)
+        private void NumClear_Click(object sender, EventArgs e)
         {
-            float sum = number1 + number2;
-            return sum;
+            Result = 0;
+            isNewNum = true;
+            Opt = Operators.Add;
+
+            NumScreen.Text = "0";
+        }
+        /*
+        public void Setdecimal(string num)
+        {
+            if (isNewNum)
+            {
+                NumScreen.Text = num;
+                isNewNum = false;
+            }
+
+            else if (NumScreen.Text == "0")
+            {
+                NumScreen.Text = num;
+            }
+
+            else
+            {
+                NumScreen.Text = NumScreen.Text + num;
+            }
+        }
+        */
+
+        // 소슷점 만들기
+        private void float_Click(object sender, EventArgs e)
+        {
+            // . 한번이상 안찍히게 하기
+            int count = 0;
+            for (int i = 0; i < NumScreen.Text.Length; i++)
+            {
+                if (NumScreen.Text[i] == '.') count++;
+            }
+            if (count >= 1) return;
+
+            // .연속으로 안찍히게 만들기
+            //else if (NumScreen.Text[NumScreen.Text.Length - 1] == '.') return;
+
+            else if(NumScreen.Text == "0")
+                    NumScreen.Text = "0.";
+
+
+            else NumScreen.Text = NumScreen.Text + '.';
         }
     }
 }
