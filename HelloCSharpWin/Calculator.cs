@@ -141,6 +141,8 @@ namespace HelloCSharpWin
             // else if (NumScreen.Text[NumScreen.Text.Length-1]=='.') return;
 
             else NumScreen.Text = NumScreen.Text + ".";
+
+            //커밋 고쳐주세요
         }
     }
 }
