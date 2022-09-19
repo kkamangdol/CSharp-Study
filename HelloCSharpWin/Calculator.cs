@@ -1,5 +1,9 @@
 using System;
 
+// Commit 방법 :
+// 커밋 또는 스태시 
+
+
 namespace HelloCSharpWin
 {
     public enum Operators {Add, Sub, Multi, Div}
@@ -142,7 +146,7 @@ namespace HelloCSharpWin
 
             else NumScreen.Text = NumScreen.Text + ".";
 
-            //커밋 고쳐주세요
+            
         }
     }
 }
